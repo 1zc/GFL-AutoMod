@@ -9,7 +9,7 @@ public Plugin myinfo =
     name        =    "GFL AutoMod",
     author        =    "Infra",
     description    =    "AutoMod - Deal punishments for text chat violations",
-    version        =    "1.0.1",
+    version        =    "1.0.2",
 	url        =    "https://gflclan.com/profile/45876-infra/"
 };
 
@@ -19,7 +19,7 @@ Handle ChatREGEXList = INVALID_HANDLE;
 Handle CmdREGEXList = INVALID_HANDLE;
 Handle NameREGEXList = INVALID_HANDLE;
 Handle CurrentSection = INVALID_HANDLE;
-Handle ClientLimits[33]; 
+Handle ClientLimits[MAXPLAYERS+1]; 
 
 public void OnPluginStart()
 {
@@ -98,7 +98,7 @@ public Action Command_SayHandle(int client, int args)
 	int begin, end = GetArraySize(ChatREGEXList);
 	RegexError ret = REGEX_ERROR_NONE;
 	bool changed = false;
-	int arr[2];
+	Handle arr[2];
 	Handle CurrRegex, CurrInfo;
 	any val;
 	char strval[192];
@@ -137,8 +137,7 @@ public Action Command_SayHandle(int client, int args)
 			{
 				any at;
 				FormatEx(strval, sizeof(strval), "%i", CurrRegex);
-				GetTrieValue(ClientLimits[client], strval, at);
-					
+				GetTrieValue(ClientLimits[client], strval, at);	
 				at++;
 				
 				int mod;
